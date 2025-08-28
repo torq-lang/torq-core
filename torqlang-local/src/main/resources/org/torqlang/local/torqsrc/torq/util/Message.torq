@@ -1,0 +1,10 @@
+package torq.util
+
+meta#{'export': true}
+type Message = {
+    'name': Str,
+    'type': 'ERROR' | 'INFO' | 'WARN',
+    'message': Str,
+    'details': Str,
+    'traceId': Str,
+}

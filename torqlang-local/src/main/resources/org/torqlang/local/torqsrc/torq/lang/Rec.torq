@@ -1,0 +1,9 @@
+package torq.lang
+
+meta#{'export': true, 'native': 'org.torqlang.klvm.RecMod'}
+type Rec = {
+    static {
+        func assign[A, B](source::A, target::B) -> A & B,
+        func size(rec::Rec) -> Int32,
+    }
+}

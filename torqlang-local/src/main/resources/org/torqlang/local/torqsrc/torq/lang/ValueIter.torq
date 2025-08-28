@@ -1,0 +1,6 @@
+package torq.lang
+
+meta#{'export': true, 'native': 'org.torqlang.klvm.ValueIterMod'}
+type ValueIter[T] = Obj & {
+    // TODO
+}

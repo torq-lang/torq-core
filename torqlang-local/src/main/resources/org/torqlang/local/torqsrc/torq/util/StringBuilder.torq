@@ -1,0 +1,6 @@
+package torq.util
+
+meta#{'export': true, 'native': 'org.torqlang.local.StringBuilderMod'}
+type StringBuilder = Obj & {
+    // TODO
+}

@@ -1,0 +1,22 @@
+/*
+ * Copyright (c) 2024 Torqware LLC. All rights reserved.
+ *
+ * You should have received a copy of the Torq Lang License v1.0 along with this program.
+ * If not, see <http://torq-lang.github.io/licensing/torq-lang-license-v1_0>.
+ */
+
+package org.torqlang.local;
+
+import org.torqlang.util.Message;
+
+import java.util.List;
+import java.util.Map;
+
+public interface TorqCompilerBundled {
+    List<Message> messages();
+
+    Map<String, CompiledApiHandler> apiHandlers();
+    Map<String, CompiledMember> members();
+    Map<String, CompiledModule> modules();
+    Map<String, CompiledPackage> packages();
+}

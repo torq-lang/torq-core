@@ -1,0 +1,54 @@
+package torq.util
+
+/*
+ * Criteria Grammar
+ * ================
+ *
+ * The criteria grammar is a subset of JSON inspired by the MongoDB grammar for queries. Production names are displayed
+ * as all capital letters and hyphenated if comprised of multiple words. Strings as literal values are displayed in
+ * double quotes, and grammar symbols are displayed in single quotes.
+ *
+ * The VALUE production defines the JSON compatible values: OBJECT, STRING, NUMBER, BOOLEAN, and NULL.
+ *
+ * FEATURE:
+ *     STRING
+ *
+ * VALUE:
+ *     OBJECT
+ *     STRING
+ *     NUMBER
+ *     BOOLEAN
+ *     NULL
+ *
+ * ARRAY:
+ *     '[' VALUE (',' VALUE)* ']'
+ *
+ * OPER:
+ *     REL-OPER
+ *     IN-OPER
+ *
+ * REL-OPER:
+ *     "$eq"
+ *     "$gt"
+ *     "$gte"
+ *     "$lt"
+ *     "$lte"
+ *     "$ne"
+ *
+ * IN-OPER:
+ *     "$in"
+ *     "$nin"
+ *
+ * FIELD-OPER:
+ *     FEATURE: VALUE
+ *     FEATURE: '{' REL-OPER: VALUE '}
+ *     FEATURE: '{' IN-OPER: ARRAY '}
+ *
+ * CRITERIA:
+ *     '{' FIELD-OPER (',' FIELD-OPER)* '}'
+ *     '{' "$not": EXPR '}'
+ *     '{' "$and": [EXPR (',' EXPR)*] '}'
+ *     '{' "$or": [EXPR (',' EXPR)*] '}'
+ */
+meta#{'export': true}
+type Criteria = Rec

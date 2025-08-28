@@ -1,0 +1,13 @@
+package torq.util
+
+meta#{'export': true, 'native': 'org.torqlang.local.HashMapMod'}
+type HashMap[K, V] = Obj & {
+    // A type can have one constructor, other constructions must be static methods
+    func HashMap[K, V]() -> HashMap[K, V],
+    proc clear(),
+    func equals(other::Any) -> Bool,
+    func get(key::K) -> V,
+    func hash_code() -> Int32,
+    proc put(key::K, value::V),
+    func size() -> Int32,
+}

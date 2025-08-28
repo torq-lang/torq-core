@@ -1,0 +1,26 @@
+/*
+ * Copyright (c) 2024 Torqware LLC. All rights reserved.
+ *
+ * You should have received a copy of the Torq Lang License v1.0 along with this program.
+ * If not, see <http://torq-lang.github.io/licensing/torq-lang-license-v1_0>.
+ */
+
+package org.torqlang.klvm;
+
+public class CommonFeatures {
+
+    public static final Str $NEW = Str.of("$new");
+    public static final Str $TYPE = Str.of("$type");
+
+    public static final Str ADD = Str.of("add");
+    public static final Str ASK = Str.of("ask");
+    public static final Str ASSIGN = Str.of("assign");
+    public static final Str CLEAR = Str.of("clear");
+    public static final Str GET = Str.of("get");
+    public static final Str PARSE = Str.of("parse");
+    public static final Str PUT = Str.of("put");
+    public static final Str SIZE = Str.of("size");
+    public static final Str TELL = Str.of("tell");
+    public static final Str TO_ARRAY = Str.of("to_array");
+
+}

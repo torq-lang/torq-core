@@ -1,0 +1,19 @@
+package torq.util
+
+meta#{'export': true, 'native': 'org.torqlang.local.ArrayListMod'}
+type ArrayList[T] = Obj & {
+    static {
+        // TODO: Currently, ArrayListMod.clsNew is overridden to accept zero arguments or a Tuple
+        func of_array[T](array::Array[T]) -> ArrayList[T],
+        func of_size[T](size::Int32) -> ArrayList[T],
+        func of_tuple[T](tuple::Tuple) -> ArrayList[T],
+    }
+    // A type can have one constructor, other constructions must be static methods
+    func ArrayList[T]() -> ArrayList[T],
+    proc add(elem::T),
+    proc clear(),
+    func equals(other::Any) -> Bool,
+    func hash_code() -> Int32,
+    func size() -> Int32,
+    func to_array() -> Array[T],
+}

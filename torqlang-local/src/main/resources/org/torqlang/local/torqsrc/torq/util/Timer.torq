@@ -1,0 +1,6 @@
+package torq.util
+
+meta#{'export': true, 'native': 'org.torqlang.local.TimerMod'}
+actor Timer() in
+    native
+end

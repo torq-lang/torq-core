@@ -1,0 +1,9 @@
+package torq.util
+
+meta#{'export': true, 'native': 'org.torqlang.local.LocalDateMod'}
+type LocalDate = Obj & {
+    static {
+        func parse(value::Str) -> LocalDate,
+    }
+    func LocalDate(epoch::Int64) -> LocalDate,
+}
