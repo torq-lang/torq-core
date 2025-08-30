@@ -19,48 +19,34 @@ import static org.torqlang.util.ResourceFileBroker.Entry;
 public final class StandardLibraryBroker {
 
     private static final List<Entry> CONTENT = List.of(
-        new Entry(new FileName(FileType.FOLDER, "org"), List.of(
-            new Entry(new FileName(FileType.FOLDER, "torqlang"), List.of(
-                new Entry(new FileName(FileType.FOLDER, "local"), List.of(
-                    new Entry(new FileName(FileType.FOLDER, "torqsrc"), List.of(
-                        new Entry(new FileName(FileType.FOLDER, "torq"), List.of(
-                            new Entry(new FileName(FileType.FOLDER, "lang"), List.of(
-                                new Entry(new FileName(FileType.SOURCE, "Cell.torq"), null),
-                                new Entry(new FileName(FileType.SOURCE, "FieldIter.torq"), null),
-                                new Entry(new FileName(FileType.SOURCE, "Int32.torq"), null),
-                                new Entry(new FileName(FileType.SOURCE, "Int64.torq"), null),
-                                new Entry(new FileName(FileType.SOURCE, "RangeIter.torq"), null),
-                                new Entry(new FileName(FileType.SOURCE, "Rec.torq"), null),
-                                new Entry(new FileName(FileType.SOURCE, "Str.torq"), null),
-                                new Entry(new FileName(FileType.SOURCE, "Token.torq"), null),
-                                new Entry(new FileName(FileType.SOURCE, "ValueIter.torq"), null)
-                            )),
-                            new Entry(new FileName(FileType.FOLDER, "util"), List.of(
-                                new Entry(new FileName(FileType.SOURCE, "ArrayList.torq"), null),
-                                new Entry(new FileName(FileType.SOURCE, "Criteria.torq"), null),
-                                new Entry(new FileName(FileType.SOURCE, "HashMap.torq"), null),
-                                new Entry(new FileName(FileType.SOURCE, "LocalDate.torq"), null),
-                                new Entry(new FileName(FileType.SOURCE, "Message.torq"), null),
-                                new Entry(new FileName(FileType.SOURCE, "StringBuilder.torq"), null),
-                                new Entry(new FileName(FileType.SOURCE, "Timer.torq"), null)
-                            ))
-                        ))
-                    ))
-                ))
+        new Entry(new FileName(FileType.FOLDER, "torq"), List.of(
+            new Entry(new FileName(FileType.FOLDER, "lang"), List.of(
+                new Entry(new FileName(FileType.SOURCE, "Cell.torq"), null),
+                new Entry(new FileName(FileType.SOURCE, "FieldIter.torq"), null),
+                new Entry(new FileName(FileType.SOURCE, "Int32.torq"), null),
+                new Entry(new FileName(FileType.SOURCE, "Int64.torq"), null),
+                new Entry(new FileName(FileType.SOURCE, "RangeIter.torq"), null),
+                new Entry(new FileName(FileType.SOURCE, "Rec.torq"), null),
+                new Entry(new FileName(FileType.SOURCE, "Str.torq"), null),
+                new Entry(new FileName(FileType.SOURCE, "Token.torq"), null),
+                new Entry(new FileName(FileType.SOURCE, "ValueIter.torq"), null)
+            )),
+            new Entry(new FileName(FileType.FOLDER, "util"), List.of(
+                new Entry(new FileName(FileType.SOURCE, "ArrayList.torq"), null),
+                new Entry(new FileName(FileType.SOURCE, "Criteria.torq"), null),
+                new Entry(new FileName(FileType.SOURCE, "HashMap.torq"), null),
+                new Entry(new FileName(FileType.SOURCE, "LocalDate.torq"), null),
+                new Entry(new FileName(FileType.SOURCE, "Message.torq"), null),
+                new Entry(new FileName(FileType.SOURCE, "StringBuilder.torq"), null),
+                new Entry(new FileName(FileType.SOURCE, "Timer.torq"), null)
             ))
         ))
     );
 
-    private static final FileName ORG = new FileName(FileType.FOLDER, "org");
-    private static final FileName TORQLANG = new FileName(FileType.FOLDER, "torqlang");
-    private static final FileName LOCAL = new FileName(FileType.FOLDER, "local");
-    private static final FileName TORQSRC = new FileName(FileType.FOLDER, "torqsrc");
-    private static final List<FileName> EXAMPLES_ROOT = List.of(ORG, TORQLANG, LOCAL, TORQSRC);
-
     private final ResourceFileBroker broker;
 
     private StandardLibraryBroker() {
-        broker = new ResourceFileBroker(MethodHandles.lookup().lookupClass(), List.of(EXAMPLES_ROOT), CONTENT);
+        broker = new ResourceFileBroker(MethodHandles.lookup().lookupClass(), List.of(List.of()), CONTENT);
     }
 
     public static ResourceFileBroker get() {

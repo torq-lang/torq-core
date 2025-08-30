@@ -1,5 +1,4 @@
 module org.torqlang.server {
-
     requires org.torqlang.local;
     requires org.torqlang.lang;
     requires org.torqlang.klvm;
@@ -9,5 +8,4 @@ module org.torqlang.server {
     requires org.eclipse.jetty.http2.server;
 
     exports org.torqlang.server;
-
 }

@@ -22,25 +22,34 @@
     <artifactId>torqlang-local</artifactId>
 
     <dependencies>
-
         <dependency>
             <groupId>org.torqlang</groupId>
             <artifactId>torqlang-lang</artifactId>
             <version>1.0-SNAPSHOT</version>
         </dependency>
-
         <dependency>
             <groupId>org.torqlang</groupId>
             <artifactId>torqlang-klvm</artifactId>
             <version>1.0-SNAPSHOT</version>
         </dependency>
-
         <dependency>
             <groupId>org.torqlang</groupId>
             <artifactId>torqlang-util</artifactId>
             <version>1.0-SNAPSHOT</version>
         </dependency>
-
     </dependencies>
+
+    <build>
+        <resources>
+            <!-- Include default resources -->
+            <resource>
+                <directory>src/main/resources</directory>
+            </resource>
+            <!-- Add torq folder contents to root -->
+            <resource>
+                <directory>src/main/torq</directory>
+            </resource>
+        </resources>
+    </build>
 
 </project>
