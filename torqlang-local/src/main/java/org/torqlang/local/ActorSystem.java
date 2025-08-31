@@ -8,6 +8,7 @@
 package org.torqlang.local;
 
 import org.torqlang.klvm.CompleteRec;
+import org.torqlang.util.Logger;
 
 import java.util.concurrent.Executor;
 

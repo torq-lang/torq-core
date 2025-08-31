@@ -7,58 +7,103 @@
 
 package org.torqlang.local;
 
-import java.io.PrintStream;
-import java.time.Clock;
-import java.time.LocalDateTime;
-import java.time.ZoneId;
+import org.torqlang.util.Logger;
+import org.torqlang.util.LoggerTools;
+
+import java.util.List;
+import java.util.Objects;
+
+import static org.torqlang.util.LoggerTools.formatter;
+import static org.torqlang.util.MessageLevel.*;
 
 public final class ConsoleLogger implements Logger {
 
     public final static ConsoleLogger SINGLETON = new ConsoleLogger();
 
-    private static final Clock TICK_MILLIS = Clock.tickMillis(ZoneId.systemDefault());
-
     private ConsoleLogger() {
     }
 
-    private static String prefix(String level, String caller) {
-        LocalDateTime time = LocalDateTime.now(TICK_MILLIS);
-        return "[" + level + "]" + "[" + time + "]" + "[" + Thread.currentThread().getName() + "]" +
-            (caller != null ? "[" + caller + "]" : "");
+    @Override
+    public void debug(String message) {
+        if (LoggerTools.isLogging(DEBUG)) {
+            log(formatter().apply(DEBUG.name(), null, message));
+        }
+    }
+
+    @Override
+    public void debug(String caller, String message) {
+        if (LoggerTools.isLogging(DEBUG)) {
+            log(formatter().apply(DEBUG.name(), caller, message));
+        }
     }
 
     @Override
     public void error(String message) {
-        log(System.err, prefix("ERROR", null), message);
+        if (LoggerTools.isLogging(ERROR)) {
+            log(formatter().apply(ERROR.name(), null, message));
+        }
     }
 
     @Override
     public void error(String caller, String message) {
-        log(System.err, prefix("ERROR", caller), message);
+        if (LoggerTools.isLogging(ERROR)) {
+            log(formatter().apply(ERROR.name(), caller, message));
+        }
     }
 
     @Override
     public void info(String message) {
-        log(System.out, prefix("INFO ", null), message);
+        if (LoggerTools.isLogging(INFO)) {
+            log(formatter().apply(INFO.name(), null, message));
+        }
     }
 
     @Override
     public void info(String caller, String message) {
-        log(System.out, prefix("INFO ", caller), message);
+        if (LoggerTools.isLogging(INFO)) {
+            log(formatter().apply(INFO.name(), caller, message));
+        }
     }
 
-    private void log(PrintStream stream, String prefix, String message) {
-        stream.println(prefix + " " + message);
+    @Override
+    public void log(String message) {
+        System.out.println(message);
+    }
+
+    @Override
+    public void logAll(List<String> messages) {
+        Objects.requireNonNull(messages);
+        for (String message : messages) {
+            log(message);
+        }
+    }
+
+    @Override
+    public void trace(String message) {
+        if (LoggerTools.isLogging(TRACE)) {
+            log(formatter().apply(TRACE.name(), null, message));
+        }
+    }
+
+    @Override
+    public void trace(String caller, String message) {
+        if (LoggerTools.isLogging(TRACE)) {
+            log(formatter().apply(TRACE.name(), caller, message));
+        }
     }
 
     @Override
     public void warn(String message) {
-        log(System.out, prefix("WARN ", null), message);
+        if (LoggerTools.isLogging(WARN)) {
+            log(formatter().apply(WARN.name(), null, message));
+        }
     }
 
     @Override
     public void warn(String caller, String message) {
-        log(System.out, prefix("WARN ", caller), message);
+        if (LoggerTools.isLogging(WARN)) {
+            log(formatter().apply(WARN.name(), caller, message));
+        }
     }
 
 }

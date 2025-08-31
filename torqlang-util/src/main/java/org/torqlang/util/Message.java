@@ -11,7 +11,7 @@ import java.util.Objects;
 
 /*
  * A general message structure compatible with OpenAPI best practices. If possible, users should use the types defined
- * in MessageType. However, the type field is not constrained to a particular domain of values so that messages can be
+ * in MessageLevel. However, the type field is not constrained to a particular domain of values so that messages can be
  * adapted to existing systems.
  */
 public interface Message {
@@ -19,15 +19,17 @@ public interface Message {
         return new MessageImpl(name, type, message, details, traceId);
     }
 
-    static Message create(String name, MessageType type, String message, String details, String traceId) {
+    static Message create(String name, MessageLevel type, String message, String details, String traceId) {
         return new MessageImpl(name, type.name(), message, details, traceId);
     }
 
-    static Message create(String name, MessageType type, String message) {
+    static Message create(String name, MessageLevel type, String message) {
         return new MessageImpl(name, type.name(), message, null, null);
     }
 
     String details();
+
+    void log(Logger logger);
 
     String message();
 
@@ -58,4 +60,22 @@ record MessageImpl(String name, String type, String message, String details, Str
     public int hashCode() {
         return Objects.hash(name, type, message);
     }
+
+    public final void log(Logger logger) {
+        if (Objects.equals(type, MessageLevel.ERROR.name())) {
+            logger.error(message());
+        } else if (Objects.equals(type, MessageLevel.WARN.name())) {
+            logger.warn(message());
+        } else if (Objects.equals(type, MessageLevel.INFO.name())) {
+            logger.info(message());
+        } else if (Objects.equals(type, MessageLevel.DEBUG.name())) {
+            logger.debug(message());
+        } else if (Objects.equals(type, MessageLevel.TRACE.name())) {
+            logger.trace(message());
+        } else {
+            String text = LoggerTools.formatter().apply(type, null, message);
+            logger.log(text);
+        }
+    }
+
 }

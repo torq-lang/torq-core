@@ -90,7 +90,7 @@ public class TorqCompiler implements PackageProvider, TorqCompilerReady, TorqCom
     private final List<Message> messages = new ArrayList<>();
 
     private ActorSystem rootActorSystem;
-    private MessageType loggingLevel = MessageType.INFO;
+    private MessageLevel loggingLevel = MessageLevel.INFO;
     private State state = State.READY;
     private List<SourceFileBroker> workspace;
 
@@ -149,20 +149,20 @@ public class TorqCompiler implements PackageProvider, TorqCompilerReady, TorqCom
     }
 
     private void addInfoMessage(String message) {
-        if (loggingLevel.ordinal() >= MessageType.INFO.ordinal()) {
-            messages.add(Message.create("TorqCompilerTrace", MessageType.INFO, "[INFO ] " + message));
+        if (MessageLevel.INFO.ordinal() <= loggingLevel.ordinal()) {
+            messages.add(Message.create("TorqCompilerTrace", MessageLevel.INFO, message));
         }
     }
 
     private void addTraceMessage(String message) {
-        if (loggingLevel.ordinal() >= MessageType.TRACE.ordinal()) {
-            messages.add(Message.create("TorqCompilerTrace", MessageType.TRACE, "[TRACE] " + message));
+        if (MessageLevel.TRACE.ordinal() <= loggingLevel.ordinal()) {
+            messages.add(Message.create("TorqCompilerTrace", MessageLevel.TRACE, message));
         }
     }
 
     private void addWarnMessage(String message) {
-        if (loggingLevel.ordinal() >= MessageType.WARN.ordinal()) {
-            messages.add(Message.create("TorqCompilerWarn", MessageType.WARN, "[WARN ] " + message));
+        if (MessageLevel.WARN.ordinal() <= loggingLevel.ordinal()) {
+            messages.add(Message.create("TorqCompilerWarn", MessageLevel.WARN, message));
         }
     }
 
@@ -817,7 +817,7 @@ public class TorqCompiler implements PackageProvider, TorqCompilerReady, TorqCom
     }
 
     @Override
-    public final TorqCompilerReady setLoggingLevel(MessageType loggingLevel) {
+    public final TorqCompilerReady setLoggingLevel(MessageLevel loggingLevel) {
         this.loggingLevel = loggingLevel;
         return this;
     }

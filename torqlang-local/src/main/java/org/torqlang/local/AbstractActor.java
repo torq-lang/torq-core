@@ -8,6 +8,7 @@
 package org.torqlang.local;
 
 import org.torqlang.util.GetStackTrace;
+import org.torqlang.util.Logger;
 
 import java.util.concurrent.Executor;
 import java.util.concurrent.RejectedExecutionException;

@@ -9,6 +9,7 @@ package org.torqlang.local;
 
 import org.torqlang.klvm.CompleteRec;
 import org.torqlang.util.BinarySearchTools;
+import org.torqlang.util.Logger;
 
 import java.util.Arrays;
 import java.util.Comparator;
@@ -56,7 +57,7 @@ public final class BasicActorSystem implements ActorSystem {
 
     @Override
     public final Logger createLogger() {
-        return Logger.createDefault();
+        return ConsoleLogger.SINGLETON;
     }
 
     @Override

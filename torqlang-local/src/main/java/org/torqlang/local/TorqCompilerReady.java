@@ -7,7 +7,7 @@
 
 package org.torqlang.local;
 
-import org.torqlang.util.MessageType;
+import org.torqlang.util.MessageLevel;
 import org.torqlang.util.SourceFileBroker;
 
 import java.util.List;
@@ -17,5 +17,5 @@ public interface TorqCompilerReady {
 
     TorqCompilerParsed parse() throws Exception;
 
-    TorqCompilerReady setLoggingLevel(MessageType loggingLevel);
+    TorqCompilerReady setLoggingLevel(MessageLevel loggingLevel);
 }

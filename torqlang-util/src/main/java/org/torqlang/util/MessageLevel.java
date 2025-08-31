@@ -8,11 +8,12 @@
 package org.torqlang.util;
 
 /*
- * Common message types.
+ * Common message types. These message types correlate with the most common logging levels.
  */
-public enum MessageType {
+public enum MessageLevel {
     ERROR,
     WARN,
     INFO,
+    DEBUG,
     TRACE,
 }
