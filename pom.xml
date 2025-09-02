@@ -15,7 +15,7 @@
 
     <groupId>org.torqlang</groupId>
     <artifactId>torq-core</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <version>1.0-rc1</version>
 
     <packaging>pom</packaging>
 
