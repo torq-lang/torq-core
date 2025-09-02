@@ -15,10 +15,8 @@ import java.util.List;
  *     void log(String text);
  *
  * There are several convenience methods centered on the standard logging levels, which allow you to log a line of
- * text in a standard format that includes the log level. The log levels are shown here by increasing level of detail.
- * Note that the level is a "level of detail" and not a severity level. A log configured to show tracing will contain
- * more messages than a log configured to show just errors. Therefore, the TRACE level is a larger ordinal value than
- * the ERROR level.
+ * text in a standard format including the log level. The log levels are shown below by increasing level of detail.
+ * Note that the level is a "level of detail" and not a severity level.
  *
  *     ERROR - Error events that might still allow the application to continue
  *     WARN  - Potentially harmful situations or deprecated API usage
@@ -36,7 +34,7 @@ import java.util.List;
  *
  *     [level][time-in-millis][thread-name][optional-caller] Message text
  *
- * LoggerTools contains settings for the formatter and logging level.
+ * LoggerTools contains global settings for formatter and logging level.
  */
 public interface Logger {
 
@@ -52,9 +50,9 @@ public interface Logger {
 
     void info(String caller, String message);
 
-    void log(String text);
+    void log(String formattedMessage);
 
-    void logAll(List<String> text);
+    void logAll(List<String> formattedMessages);
 
     void trace(String message);
 
@@ -64,7 +62,4 @@ public interface Logger {
 
     void warn(String caller, String message);
 
-    interface Formatter {
-        String apply(String level, String caller, String message);
-    }
 }

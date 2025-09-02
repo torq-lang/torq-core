@@ -5,16 +5,17 @@
  * If not, see <http://torq-lang.github.io/licensing/torq-lang-license-v1_0>.
  */
 
-package org.torqlang.local;
-
-import org.torqlang.util.Logger;
-import org.torqlang.util.LoggerTools;
+package org.torqlang.util;
 
 import java.util.List;
 import java.util.Objects;
 
 import static org.torqlang.util.LoggerTools.formatter;
-import static org.torqlang.util.MessageLevel.*;
+import static org.torqlang.util.MessageLevel.DEBUG;
+import static org.torqlang.util.MessageLevel.ERROR;
+import static org.torqlang.util.MessageLevel.INFO;
+import static org.torqlang.util.MessageLevel.TRACE;
+import static org.torqlang.util.MessageLevel.WARN;
 
 public final class ConsoleLogger implements Logger {
 
@@ -66,14 +67,14 @@ public final class ConsoleLogger implements Logger {
     }
 
     @Override
-    public void log(String message) {
-        System.out.println(message);
+    public void log(String formattedMessage) {
+        System.out.println(formattedMessage);
     }
 
     @Override
-    public void logAll(List<String> messages) {
-        Objects.requireNonNull(messages);
-        for (String message : messages) {
+    public void logAll(List<String> formattedMessages) {
+        Objects.requireNonNull(formattedMessages);
+        for (String message : formattedMessages) {
             log(message);
         }
     }

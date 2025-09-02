@@ -7,6 +7,8 @@
 
 package org.torqlang.local;
 
+import org.torqlang.util.ConsoleLogger;
+
 public final class DebuggerSetting {
 
     private static Debugger debugger;

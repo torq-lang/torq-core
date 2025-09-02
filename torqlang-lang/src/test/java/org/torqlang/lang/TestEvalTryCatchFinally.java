@@ -8,9 +8,15 @@
 package org.torqlang.lang;
 
 import org.junit.jupiter.api.Test;
-import org.torqlang.klvm.*;
+import org.torqlang.klvm.Ident;
+import org.torqlang.klvm.MachineHaltError;
+import org.torqlang.klvm.Rec;
+import org.torqlang.klvm.Str;
+import org.torqlang.klvm.VarSet;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertInstanceOf;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class TestEvalTryCatchFinally {
 
@@ -20,7 +26,7 @@ public class TestEvalTryCatchFinally {
             begin
                 try
                     x = 1 / 0
-                catch 'error'#{'name': 'java.lang.ArithmeticException', 'message': m, ...} then
+                catch 'ERROR'#{'name': 'java.lang.ArithmeticException', 'message': m, ...} then
                     a = 'Caught an attempt to divide by zero'
                 finally
                     b = 'Finally done'
@@ -46,7 +52,7 @@ public class TestEvalTryCatchFinally {
                             $finally()
                             throw $v0
                         end, $else)
-                        case $v0 of 'error'#{'name': 'java.lang.ArithmeticException', 'message': m, ...} then
+                        case $v0 of 'ERROR'#{'name': 'java.lang.ArithmeticException', 'message': m, ...} then
                             $bind('Caught an attempt to divide by zero', a)
                         else
                             $else()
@@ -67,7 +73,7 @@ public class TestEvalTryCatchFinally {
             begin
                 try
                     x = 1 / 0
-                catch 'do-not-catch'#{'name': 'java.lang.ArithmeticException', 'message': m, ...} then
+                catch 'DO-NOT-CATCH'#{'name': 'java.lang.ArithmeticException', 'message': m, ...} then
                     a = 'Caught an attempt to divide by zero'
                 finally
                     b = 'Finally done'
@@ -93,7 +99,7 @@ public class TestEvalTryCatchFinally {
                             $finally()
                             throw $v0
                         end, $else)
-                        case $v0 of 'do-not-catch'#{'name': 'java.lang.ArithmeticException', 'message': m, ...} then
+                        case $v0 of 'DO-NOT-CATCH'#{'name': 'java.lang.ArithmeticException', 'message': m, ...} then
                             $bind('Caught an attempt to divide by zero', a)
                         else
                             $else()
@@ -106,7 +112,7 @@ public class TestEvalTryCatchFinally {
         MachineHaltError exc = assertThrows(MachineHaltError.class, e::perform);
         assertInstanceOf(Rec.class, exc.computeHalt().uncaughtThrow);
         Rec errorRec = (Rec) exc.computeHalt().uncaughtThrow;
-        assertEquals(Str.of("error"), errorRec.label());
+        assertEquals(Str.of("ERROR"), errorRec.label());
         assertEquals(Str.of("java.lang.ArithmeticException"), errorRec.findValue(Str.of("name")));
         assertEquals(Str.of("/ by zero"), errorRec.findValue(Str.of("message")));
     }

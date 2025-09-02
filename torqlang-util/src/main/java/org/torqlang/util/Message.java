@@ -13,6 +13,13 @@ import java.util.Objects;
  * A general message structure compatible with OpenAPI best practices. If possible, users should use the types defined
  * in MessageLevel. However, the type field is not constrained to a particular domain of values so that messages can be
  * adapted to existing systems.
+ *
+ * The standard message fields:
+ *     name       - a name that usually correlates with the qualified name of the exception class
+ *     type       - an ID that usually maps to one of the standard types: ERROR, WARN, INFO, DEBUG, TRACE
+ *     message    - the message text
+ *     details    - an optional detailed explanation of the message
+ *     internalId - an optional ID that may map back to internal information
  */
 public interface Message {
     static Message create(String name, String type, String message, String details, String traceId) {
@@ -29,18 +36,18 @@ public interface Message {
 
     String details();
 
+    String internalId();
+
     void log(Logger logger);
 
     String message();
 
     String name();
 
-    String traceId();
-
     String type();
 }
 
-record MessageImpl(String name, String type, String message, String details, String traceId) implements Message {
+record MessageImpl(String name, String type, String message, String details, String internalId) implements Message {
     MessageImpl {
         Objects.requireNonNull(name);
     }
@@ -62,20 +69,8 @@ record MessageImpl(String name, String type, String message, String details, Str
     }
 
     public final void log(Logger logger) {
-        if (Objects.equals(type, MessageLevel.ERROR.name())) {
-            logger.error(message());
-        } else if (Objects.equals(type, MessageLevel.WARN.name())) {
-            logger.warn(message());
-        } else if (Objects.equals(type, MessageLevel.INFO.name())) {
-            logger.info(message());
-        } else if (Objects.equals(type, MessageLevel.DEBUG.name())) {
-            logger.debug(message());
-        } else if (Objects.equals(type, MessageLevel.TRACE.name())) {
-            logger.trace(message());
-        } else {
-            String text = LoggerTools.formatter().apply(type, null, message);
-            logger.log(text);
-        }
+        String text = LoggerTools.formatter().apply(type, null, message);
+        logger.log(text);
     }
 
 }

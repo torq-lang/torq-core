@@ -11,7 +11,7 @@ import org.torqlang.util.GetStackTrace;
 
 public final class NativeError extends AbstractCompleteRec {
 
-    public static final Str LABEL = Str.of("error");
+    public static final Str LABEL = Str.of("ERROR");
     public static final Str MESSAGE = Str.of("message");
     public static final Str NAME = Str.of("name");
     public static final Str STACK_TRACE = Str.of("stackTrace");
@@ -20,7 +20,7 @@ public final class NativeError extends AbstractCompleteRec {
 
     public NativeError(Throwable throwable) {
         this.throwable = throwable;
-        Str messageValue = Str.of(throwable.getMessage() != null ? throwable.getMessage() : "");
+        Complete messageValue = throwable.getMessage() != null ? Str.of(throwable.getMessage()) : Null.SINGLETON;
         Str nameValue = Str.of(throwable.getClass().getName());
         Str stackTraceValue = Str.of(GetStackTrace.apply(throwable, true));
         restore(LABEL, new CompleteField[]{

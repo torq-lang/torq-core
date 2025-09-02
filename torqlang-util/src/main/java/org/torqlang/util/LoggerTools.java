@@ -8,10 +8,10 @@ import java.util.Objects;
 public final class LoggerTools {
     private static final Clock TICK_MILLIS = Clock.tickMillis(ZoneId.systemDefault());
 
-    private static Logger.Formatter formatter;
+    private static LoggerFormatter formatter;
     private static MessageLevel loggingLevel = MessageLevel.INFO;
 
-    public static Logger.Formatter formatter() {
+    public static LoggerFormatter formatter() {
         if (formatter == null) {
             formatter = (String level, String caller, String message) -> {
                 LocalDateTime time = LocalDateTime.now(TICK_MILLIS);
@@ -39,7 +39,7 @@ public final class LoggerTools {
         return LoggerTools.loggingLevel;
     }
 
-    public static void setFormatter(Logger.Formatter formatter) {
+    public static void setFormatter(LoggerFormatter formatter) {
         if (LoggerTools.formatter != null) {
             throw new IllegalStateException("Formatter is already set");
         }
