@@ -19,6 +19,7 @@ import org.torqlang.klvm.*;
 import org.torqlang.local.*;
 import org.torqlang.server.ApiTarget.ApiTargetImage;
 import org.torqlang.server.ApiTarget.ApiTargetRef;
+import org.torqlang.util.ConsoleLogger;
 
 import java.net.URLDecoder;
 import java.nio.charset.StandardCharsets;
@@ -32,10 +33,16 @@ public final class ApiHandler extends Handler.Abstract.NonBlocking {
 
     private final ActorSystem system;
     private final ApiRouter router;
+    private final ApiBouncer bouncer;
 
     public ApiHandler(ActorSystem system, ApiRouter router) {
         this.system = system;
         this.router = router;
+        int maxActive = Integer.parseInt(
+            System.getProperty("org.torqlang.server.BouncerMaxActive", "16")
+        );
+        ConsoleLogger.SINGLETON.info(getClass().getSimpleName(), "Bouncer Max Active is " + maxActive);
+        this.bouncer = ApiBouncer.create(maxActive);
     }
 
     public static ApiHandlerBuilder builder() {
@@ -44,6 +51,14 @@ public final class ApiHandler extends Handler.Abstract.NonBlocking {
 
     @Override
     public final boolean handle(final Request request, final Response response, final Callback callback) {
+        ApiCall next = bouncer.enter(request, response, callback);
+        if (next != null) {
+            handleNext(next.request(), next.response(), next.callback());
+        }
+        return true;
+    }
+
+    private void handleNext(final Request request, final Response response, final Callback callback) {
         // This method simply sends a request message. However, if a text body can be present, we must first
         // retrieve the text asynchronously.
         final String method = request.getMethod();
@@ -52,13 +67,13 @@ public final class ApiHandler extends Handler.Abstract.NonBlocking {
         final ApiRoute route = router.findRoute(path);
         if (route == null) {
             Response.writeError(request, response, callback, HttpStatus.NOT_FOUND_404);
-            return true;
+            return;
         }
         if (route.rateLimiter != null) {
             // Checking if the rate is exceeded also records rate usage
             if (route.rateLimiter.rateExceeded()) {
                 Response.writeError(request, response, callback, HttpStatus.TOO_MANY_REQUESTS_429);
-                return true;
+                return;
             }
         }
         final CompleteTuple pathTuple = route.desc.toPathTuple(path);
@@ -73,7 +88,6 @@ public final class ApiHandler extends Handler.Abstract.NonBlocking {
                 .thenAccept((requestText -> sendRequestMessage(request, response, callback, route, headersRec, method, pathTuple,
                     queryRec, contextRec, requestText)));
         }
-        return true;
     }
 
     public final ApiRouter router() {
@@ -95,6 +109,10 @@ public final class ApiHandler extends Handler.Abstract.NonBlocking {
                 contextRec, requestText);
             ActorRef responseAdapter = new ResponseAdapter(request, response, callback, route);
             actorRef.send(Envelope.createRequest(requestRec, responseAdapter, Null.SINGLETON));
+            ApiCall next = bouncer.exit();
+            if (next != null) {
+                handleNext(next.request(), next.response(), next.callback());
+            }
         } catch (Exception exc) {
             Response.writeError(request, response, callback, exc);
         }
