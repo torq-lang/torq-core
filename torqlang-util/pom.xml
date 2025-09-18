@@ -18,7 +18,33 @@
         <artifactId>torq-core</artifactId>
         <version>1.0-rc1</version>
     </parent>
-
     <artifactId>torqlang-util</artifactId>
+    <packaging>jar</packaging>
+
+    <name>Torq Programming Language - Utilities</name>
+    <description>The Torq kernel language shared utilities.</description>
+    <url>https://torq-lang.github.io/welcome.html</url>
+
+    <licenses>
+        <license>
+            <name>Torq Lang License v1.0</name>
+            <url>https://torq-lang.github.io/licensing/torq-lang-license-v1_0.html</url>
+        </license>
+    </licenses>
+
+    <developers>
+        <developer>
+            <name>Glenn Osborne</name>
+            <email>glenn@torqware.com</email>
+            <organization>Torqware LLC</organization>
+            <organizationUrl>https://torq-lang.github.io</organizationUrl>
+        </developer>
+    </developers>
+
+    <scm>
+        <connection>scm:git:git://github.com:torq-lang/torq-core.git</connection>
+        <developerConnection>github.com:torq-lang/torq-core.git</developerConnection>
+        <url>https://github.com/torq-lang/torq-core/tree/main</url>
+    </scm>
 
 </project>
