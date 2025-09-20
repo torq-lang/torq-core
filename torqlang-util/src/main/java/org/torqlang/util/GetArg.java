@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2024 Torqware LLC. All rights reserved.
+ * Copyright (c) 2025 Torqware LLC. All rights reserved.
  *
  * You should have received a copy of the Torq Lang License v1.0 along with this program.
  * If not, see <http://torq-lang.github.io/licensing/torq-lang-license-v1_0>.
@@ -18,6 +18,7 @@ public final class GetArg {
      * Throw an IllegalArgumentException if a duplicate option is found.
      */
     public static List<String> get(String option, List<String> args) {
+        validateOption(option);
         List<String> argsAtOpt = null;
         int i = 0;
         while (i < args.size()) {
@@ -25,7 +26,7 @@ public final class GetArg {
                 argsAtOpt = new ArrayList<>();
                 while (++i < args.size()) {
                     String a = args.get(i);
-                    if (a.startsWith("-")) {
+                    if (a.startsWith("--")) {
                         break;
                     }
                     argsAtOpt.add(a);
@@ -43,14 +44,6 @@ public final class GetArg {
         return argsAtOpt != null ? List.copyOf(argsAtOpt) : null;
     }
 
-    public static List<String> getEither(String option1, String option2, List<String> args) {
-        List<String> answer = get(option1, args);
-        if (answer == null) {
-            answer = get(option2, args);
-        }
-        return answer;
-    }
-
     public static String getSingle(String option, List<String> args) {
         List<String> argsAtOpt = GetArg.get(option, args);
         if (argsAtOpt == null || argsAtOpt.isEmpty()) {
@@ -62,12 +55,35 @@ public final class GetArg {
         return argsAtOpt.get(0);
     }
 
-    public static String getSingleFromEither(String option1, String option2, List<String> args) {
-        String answer = getSingle(option1, args);
-        if (answer == null) {
-            answer = getSingle(option2, args);
+    private static void validateOption(String option) {
+        if (!option.startsWith("--")) {
+            throw new IllegalArgumentException("Expected option to start with '--'");
         }
-        return answer;
+        String optionWord = option.substring(2);
+        char[] optionChars = optionWord.toCharArray();
+        for (int i = 0; i < optionChars.length; i++) {
+            char c = optionChars[i];
+            if (c >= 'a' && c <= 'z') {
+                continue;
+            }
+            if (c >= 'A' && c <= 'Z') {
+                continue;
+            }
+            if (c >= '0' && c <= '9') {
+                continue;
+            }
+            if (c == '-') {
+                if (i == optionChars.length - 1) {
+                    continue;
+                }
+                if (optionChars[i + 1] == '-') {
+                    throw new IllegalArgumentException("Option cannot contain a '--'");
+                } else {
+                    continue;
+                }
+            }
+            throw new IllegalArgumentException("Expected option to contain letters, numbers, and single hyphens");
+        }
     }
 
 }

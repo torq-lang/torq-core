@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <!--
-  ~ Copyright (c) 2024 Torqware LLC. All rights reserved.
+  ~ Copyright (c) 2025 Torqware LLC. All rights reserved.
   ~
   ~ You should have received a copy of the Torq Lang License v1.0 along with this program.
   ~ If not, see <http://torq-lang.github.io/licensing/torq-lang-license-v1_0>.
@@ -16,7 +16,7 @@
     <parent>
         <groupId>org.torqlang</groupId>
         <artifactId>torq-core</artifactId>
-        <version>1.0-rc1</version>
+        <version>1.0</version>
     </parent>
     <artifactId>torqlang-lang</artifactId>
     <packaging>jar</packaging>
@@ -51,12 +51,12 @@
         <dependency>
             <groupId>org.torqlang</groupId>
             <artifactId>torqlang-klvm</artifactId>
-            <version>1.0-rc1</version>
+            <version>${torq.version}</version>
         </dependency>
         <dependency>
             <groupId>org.torqlang</groupId>
             <artifactId>torqlang-util</artifactId>
-            <version>1.0-rc1</version>
+            <version>${torq.version}</version>
         </dependency>
     </dependencies>
 

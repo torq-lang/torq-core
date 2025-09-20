@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <!--
-  ~ Copyright (c) 2024 Torqware LLC. All rights reserved.
+  ~ Copyright (c) 2025 Torqware LLC. All rights reserved.
   ~
   ~ You should have received a copy of the Torq Lang License v1.0 along with this program.
   ~ If not, see <http://torq-lang.github.io/licensing/torq-lang-license-v1_0>.
@@ -15,8 +15,17 @@
 
     <groupId>org.torqlang</groupId>
     <artifactId>torq-core</artifactId>
-    <version>1.0-rc1</version>
+    <version>1.0</version>
     <packaging>pom</packaging>
+
+    <properties>
+        <java.version>17</java.version>
+        <maven.compiler.source>${java.version}</maven.compiler.source>
+        <maven.compiler.target>${java.version}</maven.compiler.target>
+        <maven.compiler.release>${java.version}</maven.compiler.release>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <torq.version>1.0</torq.version>
+    </properties>
 
     <name>Torq Programming Language</name>
     <description>The Torq programming language is designed to improve scalability, responsiveness, and faster
@@ -45,13 +54,6 @@
         <developerConnection>github.com:torq-lang/torq-core.git</developerConnection>
         <url>https://github.com/torq-lang/torq-core/tree/main</url>
     </scm>
-
-    <properties>
-        <maven.compiler.source>17</maven.compiler.source>
-        <maven.compiler.target>17</maven.compiler.target>
-        <maven.compiler.release>17</maven.compiler.release>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    </properties>
 
     <modules>
         <module>torqlang-server</module>

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2024 Torqware LLC. All rights reserved.
+ * Copyright (c) 2025 Torqware LLC. All rights reserved.
  *
  * You should have received a copy of the Torq Lang License v1.0 along with this program.
  * If not, see <http://torq-lang.github.io/licensing/torq-lang-license-v1_0>.
@@ -15,28 +15,32 @@ import java.util.Objects;
  * adapted to existing systems.
  *
  * The standard message fields:
- *     name       - a name that usually correlates with the qualified name of the exception class
- *     type       - an ID that usually maps to one of the standard types: ERROR, WARN, INFO, DEBUG, TRACE
- *     message    - the message text
- *     details    - an optional detailed explanation of the message
- *     internalId - an optional ID that may map back to internal information
+ *     name         - a name that usually correlates with the qualified name of the exception class
+ *     type         - an ID that usually maps to one of the standard types: ERROR, WARN, INFO, DEBUG, TRACE
+ *     message      - the message text
+ *     details      - an optional detailed explanation of the message
+ *     traceId      - an optional ID that can map back to trace details
+ *     traceDetails - trace details not communicated to the end user but stored on the server
  */
 public interface Message {
-    static Message create(String name, String type, String message, String details, String traceId) {
-        return new MessageImpl(name, type, message, details, traceId);
+
+    static Message create(String name, String type, String message, String details, String traceId, String traceDetails) {
+        return new MessageImpl(name, type, message, details, traceId, traceDetails);
     }
 
-    static Message create(String name, MessageLevel type, String message, String details, String traceId) {
-        return new MessageImpl(name, type.name(), message, details, traceId);
+    static Message create(String name, MessageLevel type, String message, String details, String traceId, String traceDetails) {
+        return new MessageImpl(name, type.name(), message, details, traceId, traceDetails);
     }
 
     static Message create(String name, MessageLevel type, String message) {
-        return new MessageImpl(name, type.name(), message, null, null);
+        return new MessageImpl(name, type.name(), message, null, null, null);
     }
 
     String details();
 
-    String internalId();
+    String traceDetails();
+
+    String traceId();
 
     void log(Logger logger);
 
@@ -47,7 +51,10 @@ public interface Message {
     String type();
 }
 
-record MessageImpl(String name, String type, String message, String details, String internalId) implements Message {
+record MessageImpl(String name, String type, String message, String details, String traceId, String traceDetails)
+    implements Message
+{
+
     MessageImpl {
         Objects.requireNonNull(name);
     }
