@@ -10,7 +10,7 @@ package org.torqlang.server;
 import org.eclipse.jetty.server.Connector;
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.server.ServerConnector;
-import org.torqlang.util.ConsoleLogger;
+import org.torqlang.local.ConsoleLogger;
 
 public class LocalServer {
 

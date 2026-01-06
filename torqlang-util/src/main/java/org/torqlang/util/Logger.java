@@ -7,8 +7,6 @@
 
 package org.torqlang.util;
 
-import java.util.List;
-
 /*
  * The primary responsibility of a Logger is to log a line of text.
  *
@@ -49,10 +47,6 @@ public interface Logger {
     void info(String message);
 
     void info(String caller, String message);
-
-    void log(String formattedMessage);
-
-    void logAll(List<String> formattedMessages);
 
     void trace(String message);
 

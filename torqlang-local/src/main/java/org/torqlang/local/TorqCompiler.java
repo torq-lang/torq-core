@@ -67,6 +67,7 @@ import org.torqlang.lang.TypeStmt;
 import org.torqlang.util.FileName;
 import org.torqlang.util.FileType;
 import org.torqlang.util.ListTools;
+import org.torqlang.util.LoggerLevel;
 import org.torqlang.util.Message;
 import org.torqlang.util.MessageLevel;
 import org.torqlang.util.NeedsImpl;
@@ -157,7 +158,8 @@ public class TorqCompiler implements PackageProvider, TorqCompilerReady, TorqCom
     private final List<Message> messages = new ArrayList<>();
 
     private ActorSystem rootActorSystem;
-    private MessageLevel loggingLevel = MessageLevel.INFO;
+    // TODO: Replace with a Logger instance configured with a threshold
+    private LoggerLevel loggerThreshold = LoggerLevel.INFO;
     private State state = State.READY;
     private List<SourceFileBroker> workspace;
 
@@ -216,19 +218,19 @@ public class TorqCompiler implements PackageProvider, TorqCompilerReady, TorqCom
     }
 
     private void addInfoMessage(String message) {
-        if (MessageLevel.INFO.ordinal() <= loggingLevel.ordinal()) {
+        if (LoggerLevel.isLoggableAt(MessageLevel.INFO.severity(), loggerThreshold)) {
             messages.add(Message.create("TorqCompilerTrace", MessageLevel.INFO, message));
         }
     }
 
     private void addTraceMessage(String message) {
-        if (MessageLevel.TRACE.ordinal() <= loggingLevel.ordinal()) {
+        if (LoggerLevel.isLoggableAt(MessageLevel.TRACE.severity(), loggerThreshold)) {
             messages.add(Message.create("TorqCompilerTrace", MessageLevel.TRACE, message));
         }
     }
 
     private void addWarnMessage(String message) {
-        if (MessageLevel.WARN.ordinal() <= loggingLevel.ordinal()) {
+        if (LoggerLevel.isLoggableAt(MessageLevel.WARN.severity(), loggerThreshold)) {
             messages.add(Message.create("TorqCompilerWarn", MessageLevel.WARN, message));
         }
     }
@@ -884,8 +886,8 @@ public class TorqCompiler implements PackageProvider, TorqCompilerReady, TorqCom
     }
 
     @Override
-    public final TorqCompilerReady setLoggingLevel(MessageLevel loggingLevel) {
-        this.loggingLevel = loggingLevel;
+    public final TorqCompilerReady setLoggerThreshold(LoggerLevel loggerThreshold) {
+        this.loggerThreshold = loggerThreshold;
         return this;
     }
 

@@ -9,7 +9,6 @@ package org.torqlang.local;
 
 import org.torqlang.klvm.CompleteRec;
 import org.torqlang.util.BinarySearchTools;
-import org.torqlang.util.ConsoleLogger;
 import org.torqlang.util.Logger;
 
 import java.util.Arrays;

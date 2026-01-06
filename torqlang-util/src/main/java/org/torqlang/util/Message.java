@@ -42,8 +42,6 @@ public interface Message {
 
     String traceId();
 
-    void log(Logger logger);
-
     String message();
 
     String name();
@@ -73,11 +71,6 @@ record MessageImpl(String name, String type, String message, String details, Str
     @Override
     public int hashCode() {
         return Objects.hash(name, type, message);
-    }
-
-    public final void log(Logger logger) {
-        String text = LoggerTools.formatter().apply(type, null, message);
-        logger.log(text);
     }
 
 }
