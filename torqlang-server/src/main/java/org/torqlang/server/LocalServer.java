@@ -14,7 +14,7 @@ import org.torqlang.local.ConsoleLogger;
 
 public class LocalServer {
 
-    private static final ConsoleLogger LOGGER = ConsoleLogger.SINGLETON;
+    private static final ConsoleLogger LOGGER = ConsoleLogger.global();
 
     private final Server server;
     private final int port;

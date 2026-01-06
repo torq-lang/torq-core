@@ -50,14 +50,6 @@ public final class LoggerLevel {
         return severity >= threshold.severity;
     }
 
-    public static boolean isLoggableAt(LoggerLevel level, int threshold) {
-        return level.severity >= threshold;
-    }
-
-    public static boolean isLoggableAt(LoggerLevel level, LoggerLevel threshold) {
-        return level.severity >= threshold.severity;
-    }
-
     /*
      * Returns the LoggerLevel matching the given name (case-insensitive).
      *

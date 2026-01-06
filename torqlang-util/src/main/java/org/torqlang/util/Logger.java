@@ -8,33 +8,40 @@
 package org.torqlang.util;
 
 /*
- * The primary responsibility of a Logger is to log a line of text.
+ * The Logger provides a structured way to format and record application events.
+ * Use methods named after severity levels to ensure messages are categorized correctly.
  *
- *     void log(String text);
+ * Logging levels (from highest to lowest severity):
+ *     ERROR - Runtime failures that allow the application to continue
+ *     WARN  - Unexpected behavior or deprecated API usage
+ *     INFO  - Routine events highlighting application progress
+ *     DEBUG - Detailed diagnostic data for troubleshooting during development
+ *     TRACE - Fine-grained execution flow for deep-dive debugging
  *
- * There are several convenience methods centered on the standard logging levels, which allow you to log a line of
- * text in a standard format including the log level. The log levels are shown below by increasing level of detail.
- * Note that the level is a "level of detail" and not a severity level.
+ * Each log level provides two methods: one for a simple message and one that accepts
+ * an explicit caller identifier (e.g., a class or method name).
  *
- *     ERROR - Error events that might still allow the application to continue
- *     WARN  - Potentially harmful situations or deprecated API usage
- *     INFO  - Informational messages highlighting application progress
- *     DEBUG - Fine-grained informational events useful for debugging
- *     TRACE - Most detailed information, typically only for diagnosing issues
- *
- * There exists two logging methods for each log level, one with a caller and one without. For example:
- *
- *     void error(String message);
- *     void error(String caller, String message);
- *
- * When a convenience method is used, it writes a two-part message. The first part consists of 3 or 4 fields
- * enclosed in square brackets. The 4th field only appears if a caller was passed to the logger method.
- *
+ * Log entries are written using a structured prefix:
  *     [level][time-in-millis][thread-name][optional-caller] Message text
  *
- * LoggerTools contains global settings for formatter and logging level.
+ * The 4th field (optional-caller) only appears if a caller string was provided to the
+ * logging method.
  */
 public interface Logger {
+
+    static void log(Message message, Logger logger) {
+        if (message.type().equals(MessageLevel.ERROR.name())) {
+            logger.error(message.message());
+        } else if (message.type().equals(MessageLevel.WARN.name())) {
+            logger.warn(message.message());
+        } else if (message.type().equals(MessageLevel.INFO.name())) {
+            logger.info(message.message());
+        } else if (message.type().equals(MessageLevel.DEBUG.name())) {
+            logger.debug(message.message());
+        } else {
+            logger.trace(message.message());
+        }
+    }
 
     void debug(String message);
 

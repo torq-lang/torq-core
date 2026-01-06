@@ -7,8 +7,8 @@
 
 package org.torqlang.local;
 
-import org.torqlang.util.Logger;
 import org.torqlang.util.LoggerFormatter;
+import org.torqlang.util.LoggerLevel;
 
 import static org.torqlang.util.LoggerLevel.DEBUG;
 import static org.torqlang.util.LoggerLevel.ERROR;
@@ -16,51 +16,58 @@ import static org.torqlang.util.LoggerLevel.INFO;
 import static org.torqlang.util.LoggerLevel.TRACE;
 import static org.torqlang.util.LoggerLevel.WARN;
 
-public final class ConsoleLogger implements Logger {
+public final class ConsoleLogger implements LocalLogger {
 
-    public final static ConsoleLogger SINGLETON = new ConsoleLogger();
+    private final static ConsoleLogger GLOBAL = new ConsoleLogger(LoggerLevel.INFO);
 
-    private ConsoleLogger() {
+    private LoggerLevel threshold;
+
+    private ConsoleLogger(LoggerLevel threshold) {
+        this.threshold = threshold;
+    }
+
+    public static ConsoleLogger global() {
+        return ConsoleLogger.GLOBAL;
     }
 
     @Override
-    public void debug(String message) {
-        if (GlobalLoggerLevel.isLoggable(DEBUG)) {
+    public final void debug(String message) {
+        if (LoggerLevel.DEBUG.isLoggableAt(threshold)) {
             log(LoggerFormatter.console().apply(DEBUG.name(), null, message));
         }
     }
 
     @Override
-    public void debug(String caller, String message) {
-        if (GlobalLoggerLevel.isLoggable(DEBUG)) {
+    public final void debug(String caller, String message) {
+        if (LoggerLevel.DEBUG.isLoggableAt(threshold)) {
             log(LoggerFormatter.console().apply(DEBUG.name(), caller, message));
         }
     }
 
     @Override
-    public void error(String message) {
-        if (GlobalLoggerLevel.isLoggable(ERROR)) {
+    public final void error(String message) {
+        if (LoggerLevel.ERROR.isLoggableAt(threshold)) {
             log(LoggerFormatter.console().apply(ERROR.name(), null, message));
         }
     }
 
     @Override
-    public void error(String caller, String message) {
-        if (GlobalLoggerLevel.isLoggable(ERROR)) {
+    public final void error(String caller, String message) {
+        if (LoggerLevel.ERROR.isLoggableAt(threshold)) {
             log(LoggerFormatter.console().apply(ERROR.name(), caller, message));
         }
     }
 
     @Override
-    public void info(String message) {
-        if (GlobalLoggerLevel.isLoggable(INFO)) {
+    public final void info(String message) {
+        if (LoggerLevel.INFO.isLoggableAt(threshold)) {
             log(LoggerFormatter.console().apply(INFO.name(), null, message));
         }
     }
 
     @Override
-    public void info(String caller, String message) {
-        if (GlobalLoggerLevel.isLoggable(INFO)) {
+    public final void info(String caller, String message) {
+        if (LoggerLevel.INFO.isLoggableAt(threshold)) {
             log(LoggerFormatter.console().apply(INFO.name(), caller, message));
         }
     }
@@ -70,29 +77,39 @@ public final class ConsoleLogger implements Logger {
     }
 
     @Override
-    public void trace(String message) {
-        if (GlobalLoggerLevel.isLoggable(TRACE)) {
+    public final void setThreshold(LoggerLevel threshold) {
+        this.threshold = threshold;
+    }
+
+    @Override
+    public final LoggerLevel threshold() {
+        return threshold;
+    }
+
+    @Override
+    public final void trace(String message) {
+        if (LoggerLevel.TRACE.isLoggableAt(threshold)) {
             log(LoggerFormatter.console().apply(TRACE.name(), null, message));
         }
     }
 
     @Override
-    public void trace(String caller, String message) {
-        if (GlobalLoggerLevel.isLoggable(TRACE)) {
+    public final void trace(String caller, String message) {
+        if (LoggerLevel.TRACE.isLoggableAt(threshold)) {
             log(LoggerFormatter.console().apply(TRACE.name(), caller, message));
         }
     }
 
     @Override
-    public void warn(String message) {
-        if (GlobalLoggerLevel.isLoggable(WARN)) {
+    public final void warn(String message) {
+        if (LoggerLevel.WARN.isLoggableAt(threshold)) {
             log(LoggerFormatter.console().apply(WARN.name(), null, message));
         }
     }
 
     @Override
-    public void warn(String caller, String message) {
-        if (GlobalLoggerLevel.isLoggable(WARN)) {
+    public final void warn(String caller, String message) {
+        if (LoggerLevel.WARN.isLoggableAt(threshold)) {
             log(LoggerFormatter.console().apply(WARN.name(), caller, message));
         }
     }

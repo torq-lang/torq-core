@@ -25,7 +25,7 @@ public final class DebuggerSetting {
             This server is in debug mode.
             Do NOT use this server in production.
             =====================================""";
-        ConsoleLogger.SINGLETON.warn(warningBanner);
+        ConsoleLogger.global().warn(warningBanner);
         DebuggerSetting.debugger = debugger;
     }
 

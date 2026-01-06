@@ -7,15 +7,16 @@
 
 package org.torqlang.local;
 
-import org.torqlang.util.LoggerLevel;
 import org.torqlang.util.SourceFileBroker;
 
 import java.util.List;
 
 public interface TorqCompilerReady {
+
     TorqCompilerReady setWorkspace(List<SourceFileBroker> fileBrokers);
 
     TorqCompilerParsed parse() throws Exception;
 
-    TorqCompilerReady setLoggerThreshold(LoggerLevel loggerThreshold);
+    TorqCompilerReady setLogger(LocalLogger logger);
+
 }

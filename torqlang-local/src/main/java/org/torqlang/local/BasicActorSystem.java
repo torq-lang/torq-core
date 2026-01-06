@@ -57,7 +57,7 @@ public final class BasicActorSystem implements ActorSystem {
 
     @Override
     public final Logger createLogger() {
-        return ConsoleLogger.SINGLETON;
+        return ConsoleLogger.global();
     }
 
     @Override

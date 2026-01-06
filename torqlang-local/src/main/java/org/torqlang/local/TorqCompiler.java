@@ -158,8 +158,7 @@ public class TorqCompiler implements PackageProvider, TorqCompilerReady, TorqCom
     private final List<Message> messages = new ArrayList<>();
 
     private ActorSystem rootActorSystem;
-    // TODO: Replace with a Logger instance configured with a threshold
-    private LoggerLevel loggerThreshold = LoggerLevel.INFO;
+    private LocalLogger logger = ConsoleLogger.global();
     private State state = State.READY;
     private List<SourceFileBroker> workspace;
 
@@ -218,19 +217,19 @@ public class TorqCompiler implements PackageProvider, TorqCompilerReady, TorqCom
     }
 
     private void addInfoMessage(String message) {
-        if (LoggerLevel.isLoggableAt(MessageLevel.INFO.severity(), loggerThreshold)) {
+        if (LoggerLevel.isLoggableAt(MessageLevel.INFO.severity(), logger.threshold())) {
             messages.add(Message.create("TorqCompilerTrace", MessageLevel.INFO, message));
         }
     }
 
     private void addTraceMessage(String message) {
-        if (LoggerLevel.isLoggableAt(MessageLevel.TRACE.severity(), loggerThreshold)) {
+        if (LoggerLevel.isLoggableAt(MessageLevel.TRACE.severity(), logger.threshold())) {
             messages.add(Message.create("TorqCompilerTrace", MessageLevel.TRACE, message));
         }
     }
 
     private void addWarnMessage(String message) {
-        if (LoggerLevel.isLoggableAt(MessageLevel.WARN.severity(), loggerThreshold)) {
+        if (LoggerLevel.isLoggableAt(MessageLevel.WARN.severity(), logger.threshold())) {
             messages.add(Message.create("TorqCompilerWarn", MessageLevel.WARN, message));
         }
     }
@@ -886,8 +885,8 @@ public class TorqCompiler implements PackageProvider, TorqCompilerReady, TorqCom
     }
 
     @Override
-    public final TorqCompilerReady setLoggerThreshold(LoggerLevel loggerThreshold) {
-        this.loggerThreshold = loggerThreshold;
+    public final TorqCompilerReady setLogger(LocalLogger logger) {
+        this.logger = logger;
         return this;
     }
 
