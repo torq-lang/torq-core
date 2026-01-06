@@ -15,7 +15,7 @@
 
     <groupId>org.torqlang</groupId>
     <artifactId>torq-core</artifactId>
-    <version>1.0</version>
+    <version>1.1</version>
     <packaging>pom</packaging>
 
     <properties>
@@ -24,7 +24,7 @@
         <maven.compiler.target>${java.version}</maven.compiler.target>
         <maven.compiler.release>${java.version}</maven.compiler.release>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <torq.version>1.0</torq.version>
+        <torq.version>1.1</torq.version>
     </properties>
 
     <name>Torq Programming Language</name>

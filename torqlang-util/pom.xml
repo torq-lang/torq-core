@@ -16,7 +16,7 @@
     <parent>
         <groupId>org.torqlang</groupId>
         <artifactId>torq-core</artifactId>
-        <version>1.0</version>
+        <version>1.1</version>
     </parent>
     <artifactId>torqlang-util</artifactId>
     <packaging>jar</packaging>
